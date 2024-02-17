@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "type": "python",
+            "name": "Matrix derivative",
+            "file": "matrix_derivative.py",
+            "arguments": [],
+        },
+        {
+            "type": "python",
+            "name": "Function derivative",
+            "file": "function_derivative.py",
+            "arguments": [],
+        },
+        
+    ]
+}
