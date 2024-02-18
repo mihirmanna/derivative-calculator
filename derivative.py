@@ -20,46 +20,50 @@ class Function:
         to_return = ""
         
         if self.type == FunTyp.POLY:
-            to_return += f"{self.a}("
+            if not self.a == 1:
+                to_return += f"{self.a}"
             if self.inside is not None:
-                for func in self.inside:
-                    to_return += f"{str(func)} + "
+                to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
             else:
                 to_return += "x"
-            to_return += f")^{self.b}"
+            if not self.b == 1:
+                to_return += f"^{self.b}"
 
         elif self.type == FunTyp.EXP:
-            to_return += f"{self.a}*{self.b}^("
+            if not self.a == 1:
+                to_return += f"{self.a}*"
+            to_return += f"{self.b}^"
             if self.inside is not None:
-                for func in self.inside:
-                    to_return += f"{str(func)} + "
+                to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
             else:
                 to_return += "x"
-            to_return += ")"
 
         elif self.type == FunTyp.LOG:
-            to_return += f"{self.a}log_{self.b}("
+            if not self.a == 1:
+                to_return += f"{self.a}"
+            to_return += f"log_{self.b}("
             if self.inside is not None:
-                for func in self.inside:
-                    to_return += f"{str(func)} + "
+                to_return += "+".join(list(map(lambda x: str(x), self.inside)))
             else:
                 to_return += "x"
             to_return += ")"
 
         elif self.type == FunTyp.SIN:
-            to_return += f"{self.a}sin("
+            if not self.a == 1:
+                to_return += f"{self.a}"
+            to_return += "sin("
             if self.inside is not None:
-                for func in self.inside:
-                    to_return += f"{str(func)} + "
+                to_return += "+".join(list(map(lambda x: str(x), self.inside)))
             else:
                 to_return += "x"
             to_return += ")"
 
         elif self.type == FunTyp.COS:
-            to_return += f"{self.a}cos("
+            if not self.a == 1:
+                to_return += f"{self.a}"
+            to_return += "cos("
             if self.inside is not None:
-                for func in self.inside:
-                    to_return += f"{str(func)} + "
+                to_return += "+".join(list(map(lambda x: str(x), self.inside)))
             else:
                 to_return += "x"
             to_return += ")"
