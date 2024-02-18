@@ -3,10 +3,10 @@ from enum import Enum
 
 class FunTyp(Enum):
     POLY = 1  # a = coefficient, b = exponent
-    EXP = 2  # a = base
-    LOG = 3  # a = base
-    SIN = 4
-    COS = 5
+    EXP = 2  # a = coefficient, b = base
+    LOG = 3  # a = coefficient, b = base
+    SIN = 4  # a = coefficient
+    COS = 5  # a = coefficient
 
 
 class Function:
@@ -21,7 +21,7 @@ class Function:
         to_return = ""
         
         if self.type == FunTyp.POLY:
-            if not self.a == 1:
+            if self.a != 1:
                 to_return += f"{self.a}"
             if self.inside is not None:
                 if not self.inside_is_product:
@@ -32,11 +32,13 @@ class Function:
                 to_return += "1"
             elif self.b > 0:
                 to_return += "x"
-            if not self.b == 1 and not self.b == 0:
+            if self.b != 1 and self.b != 0:
                 to_return += f"^{self.b}"
 
         elif self.type == FunTyp.EXP:
-            to_return += f"{self.a}^"
+            if self.a != 1:
+                to_return += f"{self.a}*"
+            to_return += f"{self.b}^"
             if self.inside is not None:
                 if not self.inside_is_product:
                     to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
@@ -46,7 +48,9 @@ class Function:
                 to_return += "x"
 
         elif self.type == FunTyp.LOG:
-            to_return += f"log_{self.a}("
+            if self.a != 1:
+                to_return += f"{self.a}"
+            to_return += f"log_{self.b}("
             if self.inside is not None:
                 if not self.inside_is_product:
                     to_return += f'{"+".join(list(map(lambda x: str(x), self.inside)))}'
@@ -57,6 +61,8 @@ class Function:
             to_return += ")"
 
         elif self.type == FunTyp.SIN:
+            if self.a != 1:
+                to_return += f"{self.a}"
             to_return += "sin("
             if self.inside is not None:
                 if not self.inside_is_product:
@@ -68,6 +74,8 @@ class Function:
             to_return += ")"
 
         elif self.type == FunTyp.COS:
+            if self.a != 1:
+                to_return += f"{self.a}"
             to_return += "cos("
             if self.inside is not None:
                 if not self.inside_is_product:
