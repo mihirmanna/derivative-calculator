@@ -10,9 +10,11 @@ class TestStringMethods(unittest.TestCase):
         self.sin_eqn = Function(FunTyp.SIN)
         self.cos_eqn = Function(FunTyp.COS)
         self.nested_eqn = Function(FunTyp.POLY, 1, 2, [
-            Function(FunTyp.SIN, inside=[
-                Function(FunTyp.POLY, 5, 1),
-                Function(FunTyp.POLY, 1, 0)
+            Function(FunTyp.POLY, 1, 1, [
+                Function(FunTyp.SIN, inside=[
+                    Function(FunTyp.POLY, 5, 1),
+                    Function(FunTyp.POLY, 1, 0)
+                ])
             ])
         ])
 
@@ -32,7 +34,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(str(self.cos_eqn), 'cos(x)')
 
     def test_nested(self):
-        self.assertEqual(str(self.nested_eqn), '(sin(5x+x^0))^2')
+        self.assertEqual(str(self.nested_eqn), '((sin(5x+1)))^2')
 
 
 if __name__ == '__main__':

@@ -24,9 +24,11 @@ class Function:
                 to_return += f"{self.a}"
             if self.inside is not None:
                 to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
-            else:
+            elif self.b == 0:
+                to_return += "1"
+            elif self.b > 0:
                 to_return += "x"
-            if not self.b == 1:
+            if not self.b == 1 and not self.b == 0:
                 to_return += f"^{self.b}"
 
         elif self.type == FunTyp.EXP:
