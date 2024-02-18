@@ -2,14 +2,14 @@
     "configurations": [
         {
             "type": "python",
-            "name": "Matrix derivative",
-            "file": "matrix_derivative.py",
-            "arguments": [],
+            "name": "Test",
+            "file": "test_derivative.py",
+            "arguments": ["-v"],
         },
         {
             "type": "python",
-            "name": "Function derivative",
-            "file": "function_derivative.py",
+            "name": "Derivative",
+            "file": "derivative.py",
             "arguments": [],
         },
         

@@ -73,14 +73,5 @@ def power_rule(func: Function):
 
 
 if __name__ == "__main__":
-    func1 = Function(FunTyp.POLY, 3, 8)
-    func2 = Function(FunTyp.EXP, 2, 7)
-    func3 = Function(FunTyp.LOG, 6, 5)
-    func4 = Function(FunTyp.SIN, 10, 4)  # b argument is unused
-    func5 = Function(FunTyp.COS, 9, 1)  # b argument is unused
-    print(func1)
-    print(func2)
-    print(func3)
-    print(func4)
-    print(func5)
+    pass
     
