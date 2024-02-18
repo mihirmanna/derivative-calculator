@@ -47,11 +47,23 @@ class TestStringMethods(unittest.TestCase):
 class TestDerivativeRules(unittest.TestCase):
     def setUp(self):
         self.poly_eqn = Function(FunTyp.POLY, 8, 3)
+        self.sin_eqn = Function(FunTyp.SIN, 5)
+        self.cos_eqn = Function(FunTyp.COS, 4)
 
     def test_power_rule(self):
         power_rule(self.poly_eqn)
         self.assertEqual(self.poly_eqn.a, 24)
         self.assertEqual(self.poly_eqn.b, 2)
+
+    def test_sine_rule(self):
+        sine_rule(self.sin_eqn)
+        self.assertEqual(self.sin_eqn.type, FunTyp.COS)
+        self.assertEqual(self.sin_eqn.a, 5)
+
+    def test_cosine_rule(self):
+        cosine_rule(self.cos_eqn)
+        self.assertEqual(self.cos_eqn.type, FunTyp.SIN)
+        self.assertEqual(self.cos_eqn.a, -4)
 
 if __name__ == '__main__':
     unittest.main()

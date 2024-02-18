@@ -94,6 +94,15 @@ def power_rule(fun: Function):
     fun.b -= 1
 
 
+def sine_rule(fun: Function):
+    fun.type = FunTyp.COS
+
+
+def cosine_rule(fun: Function):
+    fun.type = FunTyp.SIN
+    fun.a *= -1
+
+
 if __name__ == "__main__":
     pass
     
