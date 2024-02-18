@@ -1,72 +1,86 @@
 from enum import Enum
-import copy
 
 
-class FuncType(Enum):
-    POLY = 1
-    TRIG = 2
+class FunTyp(Enum):
+    POLY = 1  # a = coefficient, b = exponent
+    EXP = 2  # a = coefficient, b = base
+    LOG = 3  # a = coefficient, b = base
+    SIN = 4  # a = coefficient
+    COS = 5  # a = coefficient
 
 
 class Function:
-    def __init__(self, coeff: float, exp: float, func_type: FuncType, inside=None):
-        self.coeff = coeff
-        self.exp = exp
+    def __init__(self, function_type: FunTyp, a: float, b: float = 0, inside: list = None):
+        self.type = function_type
+        self.a = a
+        self.b = b
         self.inside = inside
-        self.type = func_type
-        if self.type == FuncType.TRIG:
-            self.trig_vec = [1, 1]  # sin() exp, cos() exp
-    
+
     def __str__(self):
-        if self.coeff == 0:
-            return "0"
+        to_return = ""
         
-        if self.type == FuncType.POLY:
+        if self.type == FunTyp.POLY:
+            to_return += f"{self.a}("
             if self.inside is not None:
-                return f"{self.coeff}({str(self.inside)})^{self.exp}"
+                for func in self.inside:
+                    to_return += f"{str(func)} + "
             else:
-                return f"{self.coeff}x^{self.exp}"
-            
-        if self.type == FuncType.TRIG:
-            result = f"{self.coeff}("
-            if not self.trig_vec[0] == 0:  # cos() is non-vanishing
-                result += f"cos^{self.trig_vec[0]}"
-                if self.inside is not None:
-                    result += f"({str(self.inside)})"
-            if not self.trig_vec[1] == 0:  # sin() is non-vanishing
-                result += f"sin^{self.trig_vec[1]}"
-                if self.inside is not None:
-                    result += f"({str(self.inside)})"
-            result += f")^{self.exp}"
-            return result
+                to_return += "x"
+            to_return += f")^{self.b}"
+
+        elif self.type == FunTyp.EXP:
+            to_return += f"{self.a}*{self.b}^("
+            if self.inside is not None:
+                for func in self.inside:
+                    to_return += f"{str(func)} + "
+            else:
+                to_return += "x"
+            to_return += ")"
+
+        elif self.type == FunTyp.LOG:
+            to_return += f"{self.a}log_{self.b}("
+            if self.inside is not None:
+                for func in self.inside:
+                    to_return += f"{str(func)} + "
+            else:
+                to_return += "x"
+            to_return += ")"
+
+        elif self.type == FunTyp.SIN:
+            to_return += f"{self.a}sin("
+            if self.inside is not None:
+                for func in self.inside:
+                    to_return += f"{str(func)} + "
+            else:
+                to_return += "x"
+            to_return += ")"
+
+        elif self.type == FunTyp.COS:
+            to_return += f"{self.a}cos("
+            if self.inside is not None:
+                for func in self.inside:
+                    to_return += f"{str(func)} + "
+            else:
+                to_return += "x"
+            to_return += ")"
+
+        return to_return
 
 
 def power_rule(func: Function):
-    func.coeff *= func.exp
-    func.exp -= 1
-    
-
-def take_derivative(func: Function):
-    result = [func]
-    
-    if func.type == FuncType.POLY:
-        power_rule(func)
-    if func.inside is not None:
-        result.append(take_derivative(copy.deepcopy(func).inside)[0])
-        
-    return result
+    func.a *= func.b
+    func.b -= 1
 
 
 if __name__ == "__main__":
-    func1 = Function(2, 3, FuncType.POLY)
-    func2 = Function(4, 11, FuncType.POLY, inside=func1)
-    func3 = Function(0, 1, FuncType.TRIG, inside=func1)
+    func1 = Function(FunTyp.POLY, 3, 8)
+    func2 = Function(FunTyp.EXP, 2, 7)
+    func3 = Function(FunTyp.LOG, 6, 5)
+    func4 = Function(FunTyp.SIN, 10, 4)  # b argument is unused
+    func5 = Function(FunTyp.COS, 9, 1)  # b argument is unused
+    print(func1)
+    print(func2)
+    print(func3)
+    print(func4)
+    print(func5)
     
-    print(f"Function 1: {func1}")
-    print(f"Function 2: {func2}")
-    print(f"Function 3: {func3}")
-    
-    deriv1 = take_derivative(copy.deepcopy(func1))
-    deriv2 = take_derivative(copy.deepcopy(func2))
-    
-    print(f"Derivative 1: ({deriv1[0]})")
-    print(f"Derivative 2: ({deriv2[0]}) * ({deriv2[1]})")
