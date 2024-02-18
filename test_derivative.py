@@ -44,6 +44,15 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(str(self.product_eqn), '(sin(x)*8^x)')
 
 
+class TestDerivativeRules(unittest.TestCase):
+    def setUp(self):
+        self.poly_eqn = Function(FunTyp.POLY, 8, 3)
+
+    def test_power_rule(self):
+        power_rule(self.poly_eqn)
+        self.assertEqual(self.poly_eqn.a, 24)
+        self.assertEqual(self.poly_eqn.b, 2)
+
 if __name__ == '__main__':
     unittest.main()
     

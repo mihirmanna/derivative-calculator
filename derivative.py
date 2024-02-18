@@ -89,6 +89,11 @@ class Function:
         return to_return
 
 
+def power_rule(fun: Function):
+    fun.a *= fun.b
+    fun.b -= 1
+
+
 if __name__ == "__main__":
     pass
     
