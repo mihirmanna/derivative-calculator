@@ -10,11 +10,12 @@ class FunTyp(Enum):
 
 
 class Function:
-    def __init__(self, function_type: FunTyp, a: float = 0, b: float = 0, inside: list = None):
+    def __init__(self, function_type: FunTyp, a: float = 0, b: float = 0, inside: list = None, inside_is_product: bool = False):
         self.type = function_type
         self.a = a
         self.b = b
         self.inside = inside
+        self.inside_is_product = inside_is_product
 
     def __str__(self):
         to_return = ""
@@ -23,7 +24,10 @@ class Function:
             if not self.a == 1:
                 to_return += f"{self.a}"
             if self.inside is not None:
-                to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
+                if not self.inside_is_product:
+                    to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
+                else:
+                    to_return += f'({"*".join(list(map(lambda x: str(x), self.inside)))})'
             elif self.b == 0:
                 to_return += "1"
             elif self.b > 0:
@@ -34,14 +38,20 @@ class Function:
         elif self.type == FunTyp.EXP:
             to_return += f"{self.a}^"
             if self.inside is not None:
-                to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
+                if not self.inside_is_product:
+                    to_return += f'({"+".join(list(map(lambda x: str(x), self.inside)))})'
+                else:
+                    to_return += f'({"*".join(list(map(lambda x: str(x), self.inside)))})'
             else:
                 to_return += "x"
 
         elif self.type == FunTyp.LOG:
             to_return += f"log_{self.a}("
             if self.inside is not None:
-                to_return += "+".join(list(map(lambda x: str(x), self.inside)))
+                if not self.inside_is_product:
+                    to_return += f'{"+".join(list(map(lambda x: str(x), self.inside)))}'
+                else:
+                    to_return += f'{"*".join(list(map(lambda x: str(x), self.inside)))}'
             else:
                 to_return += "x"
             to_return += ")"
@@ -49,7 +59,10 @@ class Function:
         elif self.type == FunTyp.SIN:
             to_return += "sin("
             if self.inside is not None:
-                to_return += "+".join(list(map(lambda x: str(x), self.inside)))
+                if not self.inside_is_product:
+                    to_return += f'{"+".join(list(map(lambda x: str(x), self.inside)))}'
+                else:
+                    to_return += f'{"*".join(list(map(lambda x: str(x), self.inside)))}'
             else:
                 to_return += "x"
             to_return += ")"
@@ -57,7 +70,10 @@ class Function:
         elif self.type == FunTyp.COS:
             to_return += "cos("
             if self.inside is not None:
-                to_return += "+".join(list(map(lambda x: str(x), self.inside)))
+                if not self.inside_is_product:
+                    to_return += f'{"+".join(list(map(lambda x: str(x), self.inside)))}'
+                else:
+                    to_return += f'{"*".join(list(map(lambda x: str(x), self.inside)))}'
             else:
                 to_return += "x"
             to_return += ")"
