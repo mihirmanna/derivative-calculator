@@ -1,4 +1,5 @@
 from enum import Enum
+from sympy import log
 
 
 class FunTyp(Enum):
@@ -103,6 +104,15 @@ def cosine_rule(fun: Function):
     fun.a *= -1
 
 
+def exponent_rule(fun: Function):
+    fun.a *= log(fun.b)
+
+
+def logarithm_rule(fun: Function):
+    fun.type = FunTyp.POLY
+    fun.a /= log(fun.b)
+    fun.b = -1
+
+
 if __name__ == "__main__":
     pass
-    

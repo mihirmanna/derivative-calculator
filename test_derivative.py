@@ -49,6 +49,8 @@ class TestDerivativeRules(unittest.TestCase):
         self.poly_eqn = Function(FunTyp.POLY, 8, 3)
         self.sin_eqn = Function(FunTyp.SIN, 5)
         self.cos_eqn = Function(FunTyp.COS, 4)
+        self.exp_eqn = Function(FunTyp.EXP, 9, 2)
+        self.log_eqn = Function(FunTyp.LOG, 7, 6)
 
     def test_power_rule(self):
         power_rule(self.poly_eqn)
@@ -64,6 +66,17 @@ class TestDerivativeRules(unittest.TestCase):
         cosine_rule(self.cos_eqn)
         self.assertEqual(self.cos_eqn.type, FunTyp.SIN)
         self.assertEqual(self.cos_eqn.a, -4)
+
+    def test_exponent_rule(self):
+        exponent_rule(self.exp_eqn)
+        self.assertEqual(self.exp_eqn.a, 9*log(2))
+
+    def test_logarithm_rule(self):
+        logarithm_rule(self.log_eqn)
+        self.assertEqual(self.log_eqn.type, FunTyp.POLY)
+        self.assertEqual(self.log_eqn.a, 7/log(6))
+        self.assertEqual(self.log_eqn.b, -1)
+
 
 if __name__ == '__main__':
     unittest.main()
